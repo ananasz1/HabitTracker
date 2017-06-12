@@ -21,15 +21,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Cursor cursor = readHabitsDatabase();
         insertHabit();
-        displayDatabaseInfo();
+        displayDatabaseInfo(cursor);
     }
 
-    /**
-     * Temporary helper method to display information in the onscreen TextView about the state of
-     * the habits database.
-     */
-    private void displayDatabaseInfo() {
+    private Cursor readHabitsDatabase(){
         // Create and/or open a database to read from it
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
@@ -50,6 +47,15 @@ public class MainActivity extends AppCompatActivity {
                 null,                  // Don't group the rows
                 null,                  // Don't filter by row groups
                 null);                 // The sort order
+
+        return cursor;
+    }
+
+    /**
+     * Temporary helper method to display information in the onscreen TextView about the state of
+     * the habits database.
+     */
+    private void displayDatabaseInfo(Cursor cursor) {
 
         TextView displayView = (TextView) findViewById(R.id.info_text_view);
 
@@ -74,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
             int dayColumnIndex = cursor.getColumnIndex(HabitEntry.COLUMN_HABIT_DAY);
 
             cursor.moveToFirst();
+
             // Use that index to extract the String or Int value of the word
             // at the current row the cursor is on.
             int currentID = cursor.getInt(idColumnIndex);
