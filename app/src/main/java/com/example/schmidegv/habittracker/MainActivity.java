@@ -105,5 +105,13 @@ public class MainActivity extends AppCompatActivity {
         values.put(HabitEntry.COLUMN_HABIT_SPORT, "Aerobic");
         values.put(HabitEntry.COLUMN_HABIT_HOURS, 2);
         values.put(HabitEntry.COLUMN_HABIT_DAY, "Friday");
+
+        // Insert a new row for Sports in the database, returning the ID of that new row.
+        long newRowId = db.insert(HabitEntry.TABLE_NAME, null, values);
+        if (newRowId == -1) {
+            Toast.makeText(this, "Error with saving habit", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Habit saved with row id: " + newRowId, Toast.LENGTH_SHORT).show();
+        }
     }
 }
